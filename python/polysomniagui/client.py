@@ -3,9 +3,9 @@ import numpy as np
 
 log = logging.getLogger("polysomniagui.client")
 
-FRAME_HEADER_STRUCT = struct.Struct('<QQIIII')  # 8+8+4+4+4+4 = 32? (Header real é 40 bytes) -> ajustado abaixo
+FRAME_HEADER_STRUCT = struct.Struct('<QQIIII')  # 8+8+4+4+4+4 = 32 bytes
 
-HEADER_SIZE = 40
+HEADER_SIZE = 32
 MAGIC = 0x0AD51256AD51256A
 
 class Frame:
@@ -56,7 +56,7 @@ class AcquisitionClient:
         try:
             while self._running:
                 header = self._read_exact(HEADER_SIZE)
-                magic, ts_ns, channels, samples_per_channel, sample_rate_hz, reserved = struct.unpack('<QQIIII', header)
+                magic, ts_ns, channels, samples_per_channel, sample_rate_hz, flags = struct.unpack('<QQIIII', header)
                 if magic != MAGIC:
                     log.error("Magic errado: %x", magic)
                     return

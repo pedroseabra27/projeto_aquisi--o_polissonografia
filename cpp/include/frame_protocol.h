@@ -13,10 +13,10 @@ struct FrameHeader {
     std::uint32_t channels { 0 };             // Nº canais
     std::uint32_t samples_per_channel { 0 };  // Amostras por canal no frame
     std::uint32_t sample_rate_hz { 0 };       // Taxa nominal
-    std::uint32_t reserved { 0 };             // Reservado (0)
+    std::uint32_t flags { 0 };                // Flags futuros (agora 0)
 };
 
-static_assert(sizeof(FrameHeader) == 40, "FrameHeader deve ter 40 bytes");
+static_assert(sizeof(FrameHeader) == 32, "FrameHeader deve ter 32 bytes");
 
 inline std::uint64_t now_epoch_ns() {
     using namespace std::chrono;
