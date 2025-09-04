@@ -8,8 +8,7 @@
 #include <csignal>
 #include <thread>
 
-// Forward (definido em data_server.cpp)
-namespace acq { class DataServer; std::unique_ptr<DataServer> make_server(uint16_t port); }
+#include "data_server.h"
 
 static std::atomic<bool> g_running{true};
 
