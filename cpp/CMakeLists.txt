@@ -9,6 +9,7 @@ option(ENABLE_SIMULATOR "Usar driver simulado ADS1256" ON)
 
 add_library(acq_core
     src/ads1256_driver.cpp
+    $<$<NOT:$<BOOL:${ENABLE_SIMULATOR}>>:src/ads1256_hw.cpp>
     src/data_server.cpp
 )
 target_include_directories(acq_core PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
@@ -16,5 +17,11 @@ target_compile_definitions(acq_core PRIVATE $<$<BOOL:${ENABLE_SIMULATOR}>:ADS125
 
 add_executable(adc_daemon src/main.cpp)
 target_link_libraries(adc_daemon PRIVATE acq_core pthread)
+
+# Probe tool (somente em modo hardware)
+if (NOT ENABLE_SIMULATOR)
+    add_executable(ads1256_probe src/spi_probe.cpp)
+    target_link_libraries(ads1256_probe PRIVATE acq_core pthread)
+endif()
 
 install(TARGETS adc_daemon RUNTIME DESTINATION bin)
