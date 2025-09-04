@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "polysomniagui"
+version = "0.0.1"
+description = "Interface em tempo real para aquisição polissonografia"
+authors = [ { name = "Equipe" } ]
+dependencies = [
+  "pyqtgraph>=0.13.3",
+  "PySide6>=6.7.0",
+  "numpy>=1.26.0",
+  "structlog>=24.1.0"
+]
+requires-python = ">=3.10"
+
+[project.scripts]
+polysomniagui = "polysomniagui.main:main"
