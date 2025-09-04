@@ -1,6 +1,8 @@
 #pragma once
 #include <cstdint>
 #include <vector>
+#include <atomic>
+#include <memory>
 #include "frame_protocol.h"
 
 namespace acq {
